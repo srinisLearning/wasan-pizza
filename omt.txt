@@ -1,0 +1,43 @@
+Build a landing page or ui for pizza delivery app .Use text primary for bold fonts. Layout should be hero section followed by page content.It should have link to login button for login page
+=============================================================================================
+LOGIN & REGISTER
+follow shadcn form docs from https://ui.shadcn.com/docs/forms/react-hook-form and build the register form. 
+UI must be simple two column layout with an appropriate image on the left  and form on the right
+The background should be white and the form should be centered horizontally and vertically.
+the on submit should log the form data to the console in json format. 
+
+Fields are name email mobile number password and confirm password and submit button
+
+the register form should have links to login at the bottom and home at the top
+
+taking referance from @register/page.tsx build the login page .The two fileds should be email and password.
+submit button should console log the data in json format
+also add a select component with two value user and admin
+the login page should have links to register at the bottom and home at the top 
+
+
+
+
+@user.ts now integrate the regiserNewUser service,disable the button when it is processing,afer success or failure show toast message using shadcn sonner and navigate to login page after sucessfull registration
+
+Now lets us completer the login process. Validate the credentials username password and role  and return db user record if success 
+navigate to user/products or admin/dashboard based on the user role
+ 
+
+ =====================================================================================================
+ complete user registration server action.Check if email exists.If yes return success false and message else hash the password with bcrypt and save the user.
+ Now integrate the register server action in the register page.When the user clicks on the submit button the submit button should be disabled or show the loader with the button.Once the response is received  enable the button and show toast message based on the success or failure.If the registration is successful navigate the user to the login page.Use Reat Hot Toast which is already installed to show the messages.Just import it and show the relevant messages
+ =========================================================================================
+ Now build the login functionality and integrate it login page.If credentials are matched return jwt token by encoding userid, email. In the ui store the token in the cookies for the authorization purpose.Depending on the user role navigate customer to customer/pizza page and admin to admin/dashboard  after login.Store role in the cookies
+
+ https://nextjs.org/docs/app/getting-started/proxy
+ implement the middleware header
+ if there is no token in the browser cookies and the user tries to access the protected pages redirect them to the login page. The protected routes begin with /admin or /customer
+
+ implement the vice versa condition also . if the user is logged in and is trying to access the public routes navigte them to customer/pizza page or admin/dashboard page depending on the role. the role will be available in the browser cookies
+
+ ===============================================================================================================================
+ when we click on the menu icon it should open the sidebar (Shadcn Sheet Component). Based on the logged in user role render the menu items,highlight the active menu.Menu Items should have icons as well.
+ The menu items are 
+ Admin : Dashboard, Pizza, Order, Users, Customers,Profile
+ Customer : Pizza,Orders,Addresses,Profile,Help
