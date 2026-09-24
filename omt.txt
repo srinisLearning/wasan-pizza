@@ -41,3 +41,36 @@ navigate to user/products or admin/dashboard based on the user role
  The menu items are 
  Admin : Dashboard, Pizza, Order, Users, Customers,Profile
  Customer : Pizza,Orders,Addresses,Profile,Help
+
+ Build Pizza Curd Operation UI .When we click the add pizza button it has to oopen shadcn dialouge with the pizza form.
+ take the form fields from the interface
+ list all the pizzas in shadcn table. It should have edit, delete actions
+ Note : Shadcn dialog should handle both add and edit senarios. The button text should change based on the senarios 
+ Make it as a seperate component pizza-form
+
+ =========================================================================================================================
+ Build variats CRUD for the selected pizza.Variant form should be a modal popup.create a reusable variant form component.use it for both add and edit.
+ =======================================================================================================================
+ Build the customer/pizza UI.
+ It should display all the available pizzas in a grid format.When we click on any pizza it should show a shadcn dialog shoing the pizza details, variant selection quantity selection and add to cart button. For now addToCart function should just throw a alert pizza added to cart with pizza name variant details and quantity 
+ ===============================================================================================================
+ just like user-store create cart store and integrate the add to cart in the pizza details dialog.
+
+ now display the cart count in the header with a lucide react icon.when we click on it should open  
+ customers/cart route. And in that page display the cart items in a shadcn table
+ also display sub total update qty and remove buttons
+
+ ==============================================================================================================
+ Now build the filters section in the customer pizza .Make it a seperate component pizza filters.
+ Add category filter  sort by filter .Intergrate the filter with the server components accordingly
+ @constants
+ ==============================================================================================
+now create addresses server actions take [pizzas.ts](file;file:///d%3A/6DEV/ReactNext/wasan-pizza/src/server-actions/pizzas.ts) as referance
+=============================================================================================================
+
+Take admin/pizza page UI  as reference  and build the customer addresses page address form should have reusable 
+address form.list all addresses in a shadcn table. It should have edit, delete actions 
+
+===============================================================================================================
+
+Now add the address selection feature in the cart page.It should be displayed only when the cart value is greater than zero

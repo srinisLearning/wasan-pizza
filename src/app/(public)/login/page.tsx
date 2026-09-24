@@ -38,7 +38,7 @@ const loginSchema = z.object({
     message: "Password must be at least 8 characters.",
   }),
   role: z.enum(["customer", "admin"], {
-    required_error: "Please select a role.",
+    message: "Please select a role.",
   })
 })
 
@@ -57,9 +57,9 @@ export default function LoginPage() {
     try {
       const response = await loginUser(values)
       if (response.success) {
-        Cookies.set("token", response.token, { expires: 1 })
-        Cookies.set("role", response.role, { expires: 1 })
-        Cookies.set("email", response.email, { expires: 1 })
+        Cookies.set("token", response.token as string, { expires: 1 })
+        Cookies.set("role", response.role as string, { expires: 1 })
+        Cookies.set("email", response.email as string, { expires: 1 })
         toast.success(response.message)
         
         if (response.role === "admin") {
