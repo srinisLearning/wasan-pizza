@@ -2,22 +2,21 @@
 
 import React from "react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
-import { pizzaCategories, sortByOptions } from "@/constants/categories";
+import { pizzaCategories } from "@/constants/categories";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 
-const PizzaFilters = () => {
+const AddPizzaFilterComponent = () => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
   const currentCategory = searchParams.get("category") || "all";
   const currentSubCategory = searchParams.get("sub_category") || "all";
-  const currentSortBy = searchParams.get("sortBy") || "newest";
 
   const updateFilters = (key: string, value: string) => {
     const params = new URLSearchParams(searchParams.toString());
-    if (value === "all" && (key === "category" || key === "sub_category")) {
+    if (value === "all") {
       params.delete(key);
     } else {
       params.set(key, value);
@@ -29,13 +28,13 @@ const PizzaFilters = () => {
     router.push(pathname);
   };
 
-  const hasFilters = currentCategory !== "all" || currentSubCategory !== "all" || currentSortBy !== "newest";
+  const hasFilters = currentCategory !== "all" || currentSubCategory !== "all";
 
   return (
-    <div className="flex flex-col sm:flex-row justify-start items-center gap-4 mb-8">
+    <div className="flex flex-col sm:flex-row justify-start items-center gap-4">
       <div className="w-full sm:w-[200px]">
         <Select value={currentCategory} onValueChange={(val) => updateFilters("category", val)}>
-          <SelectTrigger className="border-primary">
+          <SelectTrigger className="border-gray-300">
             <SelectValue placeholder="Category" />
           </SelectTrigger>
           <SelectContent>
@@ -48,7 +47,7 @@ const PizzaFilters = () => {
 
       <div className="w-full sm:w-[200px]">
         <Select value={currentSubCategory} onValueChange={(val) => updateFilters("sub_category", val)}>
-          <SelectTrigger className="border-primary">
+          <SelectTrigger className="border-gray-300">
             <SelectValue placeholder="Sub-category" />
           </SelectTrigger>
           <SelectContent>
@@ -62,23 +61,8 @@ const PizzaFilters = () => {
         </Select>
       </div>
       
-      <div className="w-full sm:w-[200px]">
-        <Select value={currentSortBy} onValueChange={(val) => updateFilters("sortBy", val)}>
-          <SelectTrigger className="border-primary">
-            <SelectValue placeholder="Sort By" />
-          </SelectTrigger>
-          <SelectContent>
-            {sortByOptions.map((option) => (
-              <SelectItem key={option.value} value={option.value}>
-                {option.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
-      
       {hasFilters && (
-        <Button variant="outline" onClick={clearFilters} className="text-gray-500 hover:text-red-500 border-primary">
+        <Button variant="outline" onClick={clearFilters} className="text-gray-500 hover:text-red-500">
           Clear Filters
         </Button>
       )}
@@ -86,4 +70,4 @@ const PizzaFilters = () => {
   );
 };
 
-export default PizzaFilters;
+export default AddPizzaFilterComponent;

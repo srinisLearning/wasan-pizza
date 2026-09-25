@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import { Button } from "@/components/ui/button";
 import PageTitle from "@/components/ui/page-title";
 import {
@@ -26,9 +26,10 @@ import PizzaForm from "./_components/pizza-form";
 import { deletePizza, getAllPizzas } from "@/server-actions/pizzas";
 import { toast } from "react-hot-toast";
 
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import AddPizzaFilterComponent from "./_components/addpizzafiltercomponent";
 
-const AdminPizzaPage = () => {
+const AdminPizzaContent = () => {
   const router = useRouter();
   const [pizzas, setPizzas] = useState<IPizza[]>([]);
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -37,11 +38,19 @@ const AdminPizzaPage = () => {
   const [pizzaToDelete, setPizzaToDelete] = useState<IPizza | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
 
+  const searchParams = useSearchParams();
+  const category = searchParams.get("category");
+  const sub_category = searchParams.get("sub_category");
+
   const fetchPizzas = async () => {
     setIsLoading(true);
-    const response = await getAllPizzas();
-    if (response.success && response.data) {
-      setPizzas(response.data as IPizza[]);
+    const params: any = { isAdmin: true };
+    if (category) params.category = category;
+    if (sub_category) params.sub_category = sub_category;
+
+    const response = await getAllPizzas(params);
+    if (response.success && response.pizzas) {
+      setPizzas(response.pizzas as IPizza[]);
     } else {
       toast.error("Failed to fetch pizzas");
     }
@@ -50,7 +59,7 @@ const AdminPizzaPage = () => {
 
   useEffect(() => {
     fetchPizzas();
-  }, []);
+  }, [category, sub_category]);
 
   const handleAddPizza = () => {
     setSelectedPizza(null);
@@ -89,14 +98,18 @@ const AdminPizzaPage = () => {
           <PageTitle title="Pizzas List" />
           <Button onClick={handleAddPizza}>Add Pizza</Button>
         </div>
+        <div className="flex flex-col gap-5 mt-5">
+          <AddPizzaFilterComponent />
+        </div>
 
-        <div className="border rounded-md mt-5 w-3xl mx-auto">
+        <div className="border rounded-md mt-5 w-full overflow-x-auto">
           <Table>
             <TableHeader>
               <TableRow>
                 <TableHead>Image</TableHead>
                 <TableHead>Name</TableHead>
                 <TableHead>Category</TableHead>
+                <TableHead>Sub-category</TableHead>
                 <TableHead>Status</TableHead>
                 <TableHead className="text-right">Actions</TableHead>
               </TableRow>
@@ -117,9 +130,10 @@ const AdminPizzaPage = () => {
                   </TableCell>
                   <TableCell className="font-medium">{pizza.name}</TableCell>
                   <TableCell className="capitalize">{pizza.category}</TableCell>
+                  <TableCell className="capitalize">{pizza["sub-category"]}</TableCell>
                   <TableCell>
                     <span
-                      className={`px-2 py-1 rounded-full text-xs ${pizza.status === "active" ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}
+                      className={`px-2 py-1 rounded-full text-xs ${pizza.status === "available" ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}
                     >
                       {pizza.status}
                     </span>
@@ -154,7 +168,7 @@ const AdminPizzaPage = () => {
               {pizzas.length === 0 && (
                 <TableRow>
                   <TableCell
-                    colSpan={5}
+                    colSpan={6}
                     className="text-center h-24 text-gray-500"
                   >
                     No pizzas found.
@@ -205,6 +219,14 @@ const AdminPizzaPage = () => {
         </AlertDialogContent>
       </AlertDialog>
     </>
+  );
+};
+
+const AdminPizzaPage = () => {
+  return (
+    <Suspense fallback={<div>Loading pizzas...</div>}>
+      <AdminPizzaContent />
+    </Suspense>
   );
 };
 

@@ -116,7 +116,7 @@ const VariantsContent: React.FC<VariantsContentProps> = ({ pizzaId }) => {
                 variants.map((variant) => (
                   <TableRow key={variant.id}>
                     <TableCell className="font-medium">{variant.type}</TableCell>
-                    <TableCell>${variant.price.toFixed(2)}</TableCell>
+                    <TableCell>₹{variant.price.toFixed(2)}</TableCell>
                     <TableCell className="text-right space-x-2">
                       <Button
                         variant="outline"

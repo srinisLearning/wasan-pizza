@@ -11,6 +11,7 @@ export interface IPizza {
   id: string;
   name: string;
   category: string;
+  "sub-category": string;
   description: string;
   image: string;
   status: string;

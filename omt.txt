@@ -73,4 +73,11 @@ address form.list all addresses in a shadcn table. It should have edit, delete a
 
 ===============================================================================================================
 
-Now add the address selection feature in the cart page.It should be displayed only when the cart value is greater than zero
+
+https://docs.stripe.com/sdks/stripejs-react
+ 
+implement stripe payment dialog code, take the reference from
+documentation
+Client secret code is already there, just created a payment-dialog component
+and render creditcard form, address from
+f payment success call onPaymentSuccess

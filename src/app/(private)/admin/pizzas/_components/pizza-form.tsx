@@ -33,10 +33,12 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "react-hot-toast";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 const pizzaSchema = z.object({
   name: z.string().min(1, "Name is required"),
   category: z.string().min(1, "Category is required"),
+  sub_category: z.string().min(1, "Sub-category is required"),
   description: z.string().min(1, "Description is required"),
   image: z.string().optional(),
   status: z.string().min(1, "Status is required"),
@@ -64,7 +66,8 @@ const PizzaForm: React.FC<PizzaFormProps> = ({
     resolver: zodResolver(pizzaSchema),
     defaultValues: {
       name: initialData?.name || "",
-      category: initialData?.category || "",
+      category: initialData?.category || "Vegetarian",
+      sub_category: initialData?.["sub-category"] || "",
       description: initialData?.description || "",
       image: initialData?.image || "",
       status: initialData?.status || "active",
@@ -74,9 +77,28 @@ const PizzaForm: React.FC<PizzaFormProps> = ({
   // Update form when initialData changes
   React.useEffect(() => {
     if (initialData) {
+      let mappedCategory = initialData.category || "Vegetarian";
+      if (mappedCategory.toLowerCase().includes("non") || mappedCategory.toLowerCase().includes("nv")) {
+        mappedCategory = "Non Vegetarian";
+      } else if (mappedCategory.toLowerCase().includes("veg")) {
+        mappedCategory = "Vegetarian";
+      }
+
+      let mappedSubCategory = initialData["sub-category"] || "";
+      const matchSub = pizzaCategories.find(
+        (c) =>
+          c.value.toLowerCase() === mappedSubCategory.toLowerCase() ||
+          c.label.toLowerCase() === mappedSubCategory.toLowerCase() ||
+          mappedSubCategory.toLowerCase().includes(c.value.toLowerCase().substring(0, 5))
+      );
+      if (matchSub) {
+        mappedSubCategory = matchSub.value;
+      }
+
       form.reset({
         name: initialData.name,
-        category: initialData.category,
+        category: mappedCategory,
+        sub_category: mappedSubCategory,
         description: initialData.description,
         image: initialData.image,
         status: initialData.status,
@@ -84,7 +106,8 @@ const PizzaForm: React.FC<PizzaFormProps> = ({
     } else {
       form.reset({
         name: "",
-        category: "",
+        category: "Vegetarian",
+        sub_category: "",
         description: "",
         image: "",
         status: "active",
@@ -118,7 +141,11 @@ const PizzaForm: React.FC<PizzaFormProps> = ({
       }
 
       const pizzaData = {
-        ...values,
+        name: values.name,
+        category: values.category,
+        "sub-category": values.sub_category,
+        description: values.description,
+        status: values.status,
         image: imageUrl || "",
       };
 
@@ -181,8 +208,43 @@ const PizzaForm: React.FC<PizzaFormProps> = ({
                 control={form.control}
                 name="category"
                 render={({ field }) => (
-                  <FormItem>
+                  <FormItem className="space-y-3">
                     <FormLabel>Category</FormLabel>
+                    <FormControl>
+                      <RadioGroup
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                        className="flex flex-col space-y-1"
+                      >
+                        <FormItem className="flex items-center space-x-3 space-y-0">
+                          <FormControl>
+                            <RadioGroupItem value="Vegetarian" />
+                          </FormControl>
+                          <FormLabel className="font-normal">
+                            Vegetarian
+                          </FormLabel>
+                        </FormItem>
+                        <FormItem className="flex items-center space-x-3 space-y-0">
+                          <FormControl>
+                            <RadioGroupItem value="Non Vegetarian" />
+                          </FormControl>
+                          <FormLabel className="font-normal">
+                            Non Vegetarian
+                          </FormLabel>
+                        </FormItem>
+                      </RadioGroup>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="sub_category"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Sub-category</FormLabel>
                     <Select
                       onValueChange={field.onChange}
                       defaultValue={field.value}
@@ -190,7 +252,7 @@ const PizzaForm: React.FC<PizzaFormProps> = ({
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select category" />
+                          <SelectValue placeholder="Select sub-category" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>

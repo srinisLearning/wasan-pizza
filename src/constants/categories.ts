@@ -1,12 +1,10 @@
 export const pizzaCategories = [
   { label: "Classic", value: "classic" },
-  { label: "Vegetarian", value: "vegetarian" },
   { label: "Meat Lovers", value: "meat_lovers" },
   { label: "Sea Food", value: "sea-food" },
   { label: "Spicy", value: "spicy" },
   { label: "Specialty", value: "specialty" },
-  { label: "Non Vegetarian", value: "Non-Vegetarian" },
- 
+  { label: "Standard", value: "standard" },
 ];
 
 export const sortByOptions = [

@@ -6,7 +6,7 @@ import PizzaFilters from "./pizza-filters";
 const PizzasPage = async ({
   searchParams,
 }: {
-  searchParams: Promise<{ category?: string; sortBy?: string }>;
+  searchParams: Promise<{ category?: string; sub_category?: string; sortBy?: string }>;
 }) => {
   const resolvedParams = await searchParams;
   const { success, pizzas } = await getAllPizzas(resolvedParams);

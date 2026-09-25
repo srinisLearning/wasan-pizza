@@ -22,15 +22,22 @@ export const addPizza = async (pizzaData: any) => {
   }
 };
 
-export const getAllPizzas = async (searchParams?: { category?: string; sortBy?: string }) => {
+export const getAllPizzas = async (searchParams?: { category?: string; sub_category?: string; sortBy?: string; isAdmin?: boolean }) => {
   try {
     let query = supabaseConfig
       .from("pizza_pizzas")
-      .select("*,pizza_variants(*)")
-      .eq("status", "available");
+      .select("*,pizza_variants(*)");
+
+    if (!searchParams?.isAdmin) {
+      query = query.eq("status", "available");
+    }
 
     if (searchParams?.category && searchParams.category !== "all") {
       query = query.ilike("category", searchParams.category);
+    }
+
+    if (searchParams?.sub_category && searchParams.sub_category !== "all") {
+      query = query.ilike("sub-category", searchParams.sub_category);
     }
 
     if (!searchParams?.sortBy || searchParams.sortBy === "newest") {

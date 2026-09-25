@@ -66,17 +66,24 @@ export const PizzasGrid = ({ pizzas }: { pizzas: PizzaWithVariants[] }) => {
             <div className="p-4 flex-grow flex flex-col">
               <div className="flex items-start justify-between gap-2 mb-1">
                 <h3 className="font-semibold text-lg leading-tight">{pizza.name}</h3>
-                {pizza.category && (
-                  <span className="bg-primary text-white text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wider whitespace-nowrap">
-                    {pizza.category}
-                  </span>
-                )}
+                <div className="flex gap-2">
+                  {pizza.category && (
+                    <span className={`text-white text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wider whitespace-nowrap ${pizza.category === 'Vegetarian' ? 'bg-green-600' : 'bg-red-600'}`}>
+                      {pizza.category}
+                    </span>
+                  )}
+                  {pizza["sub-category"] && (
+                    <span className="bg-primary text-white text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wider whitespace-nowrap">
+                      {pizza["sub-category"]}
+                    </span>
+                  )}
+                </div>
               </div>
              {/*  <p className="text-gray-600 text-sm line-clamp-2 mb-2 flex-grow">{pizza.description}</p> */}
               <div className="mt-auto flex items-center justify-between">
                 {pizza.pizza_variants && pizza.pizza_variants.length > 0 ? (
                   <p className="font-medium text-primary">
-                    Starts at ${Math.min(...pizza.pizza_variants.map((v) => v.price))}
+                    Starts at ₹{Math.min(...pizza.pizza_variants.map((v) => v.price))}
                   </p>
                 ) : <div />}
                 <Button size="sm" variant="outline" className="text-primary border-primary" onClick={(e) => { e.stopPropagation(); handlePizzaClick(pizza); }}>
@@ -116,7 +123,7 @@ export const PizzasGrid = ({ pizzas }: { pizzas: PizzaWithVariants[] }) => {
                     <SelectContent>
                       {selectedPizza.pizza_variants?.map((variant) => (
                         <SelectItem key={variant.id} value={variant.id}>
-                          {variant.type} - ${variant.price}
+                          {variant.type} - ₹{variant.price}
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -148,7 +155,7 @@ export const PizzasGrid = ({ pizzas }: { pizzas: PizzaWithVariants[] }) => {
                   <div className="flex justify-between items-center font-semibold mt-2">
                     <span>Total:</span>
                     <span>
-                      ${(selectedPizza.pizza_variants.find((v) => v.id === selectedVariantId)?.price || 0) * quantity}
+                      ₹{(selectedPizza.pizza_variants.find((v) => v.id === selectedVariantId)?.price || 0) * quantity}
                     </span>
                   </div>
                 )}
