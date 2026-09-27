@@ -17,6 +17,7 @@
     "bcryptjs": "^3.0.3",
     "class-variance-authority": "^0.7.1",
     "cn": "^0.2.6",
+    "dayjs": "^1.11.23",
     "js-cookie": "^3.0.8",
     "jsonwebtoken": "^9.0.3",
     "lucide-react": "^1.43.0",

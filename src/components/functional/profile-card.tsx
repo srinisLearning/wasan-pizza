@@ -1,5 +1,6 @@
 import { IUser } from "@/interfaces";
 import React from "react";
+import ChangePassword from "./change-password";
 
 function ProfileCard({ user }: { user: IUser }) {
   if (!user) return null;
@@ -32,9 +33,14 @@ function ProfileCard({ user }: { user: IUser }) {
           <span className="text-gray-700">{user.phone || "N/A"}</span>
         </div>
         <div className="flex flex-col">
-          <span className="text-sm text-gray-500 font-medium">Role</span>
+          <span className="text-sm text-gray-500 font-medium">
+            Account Type
+          </span>
           <span className="text-gray-700 capitalize">{user.role}</span>
         </div>
+      </div>
+      <div className="mt-6">
+        <ChangePassword />
       </div>
     </div>
   );

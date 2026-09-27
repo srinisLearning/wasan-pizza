@@ -13,12 +13,12 @@ const SidebarMenuItems = () => {
   const [open, setOpen] = useState(false);
 
   const adminMenus = [
-    { name: 'Dashboard', path: '/admin/dashboard', icon: LayoutDashboard },
-    { name: 'Pizza', path: '/admin/pizzas', icon: Pizza },
-    { name: 'Order', path: '/admin/order', icon: ListOrdered },
-    { name: 'Users', path: '/admin/users', icon: Users },
-    { name: 'Customers', path: '/admin/customers', icon: UserCircle },
-    { name: 'Profile', path: '/admin/profile', icon: User },
+    { name: "Dashboard", path: "/admin/dashboard", icon: LayoutDashboard },
+    { name: "Pizza", path: "/admin/pizzas", icon: Pizza },
+    { name: "Orders", path: "/admin/orders", icon: ListOrdered },
+    { name: "Users", path: "/admin/users", icon: Users },
+    { name: "Customers", path: "/admin/customers", icon: UserCircle },
+    { name: "Profile", path: "/admin/profile", icon: User },
   ];
 
   const customerMenus = [

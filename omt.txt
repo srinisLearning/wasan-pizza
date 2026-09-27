@@ -81,3 +81,8 @@ documentation
 Client secret code is already there, just created a payment-dialog component
 and render creditcard form, address from
 f payment success call onPaymentSuccess
+
+==================================================================================================
+@pizzas.ts, @users.ts Build admin dashboard functionality. I need total customers, total orders placed, totaal orders cancelled,
+total revenue and below dashboard cards show last six orders in shadcn table.Dont put multiple colors make it clean and simple.
+Use proper icons for dashboard tiles.

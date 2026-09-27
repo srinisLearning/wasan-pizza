@@ -14,6 +14,7 @@ import toast from "react-hot-toast";
 import { createPaymentIntent } from "@/server-actions/payment";
 import { PaymentDialog } from "./payment-dialog";
 import { useRouter } from "next/navigation";
+import { saveOrder } from "@/server-actions/orders";
 
 const CartPage = () => {
   const router = useRouter();
@@ -74,11 +75,35 @@ const CartPage = () => {
     }
   };
 
-  const onPaymentSuccess = (paymentId: any) => {
-    console.log(`Payment Successfull with id ${paymentId}`);
-    setShowPaymentDialog(false);
-    clearCart();
-    router.push("/customer/pizzas");
+  const onPaymentSuccess = async (paymentId: any) => {
+    try {
+      const response = await saveOrder({
+        customer_id: user?.id || "",
+        subtotal,
+        tax: 0,
+        total: subtotal,
+        address_id: selectedAddress,
+        payment_id: paymentId,
+        items: cartItems.map((item) => ({
+          name: item.name,
+          image: item.image,
+          quantity: item.quantity,
+          unit_price: item.price,
+          total_price: item.price * item.quantity,
+        })),
+      });
+
+      if (response.success) {
+        toast.success("Order placed successfully");
+        setShowPaymentDialog(false);
+        clearCart();
+        router.push("/customer/orders");
+      } else {
+        toast.error(response.message || "Failed to place order");
+      }
+    } catch (error: any) {
+      toast.error(error.message || "Something went wrong while saving the order");
+    }
   };
 
   return (

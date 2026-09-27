@@ -37,3 +37,26 @@ export interface IAddress {
   customer_id: string;
   created_at: string;
 }
+
+export interface IOrder {
+  id: string;
+  customer_id: string;
+  address_id: string;
+  subtotal: number;
+  tax?: number; // Default is 0
+  total: number;
+  payment_id: string;
+  status: string;
+  created_at: string;
+}
+
+export interface IOrderItem {
+  id: string;
+  name: string;
+  quantity: number;
+  image: string;
+  unit_price: number;
+  total_price: number;
+  order_id: string;
+  created_at: string;
+}

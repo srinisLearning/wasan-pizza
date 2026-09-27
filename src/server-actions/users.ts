@@ -168,3 +168,114 @@ export const logoutUser = async () => {
     };
   }
 }
+
+export async function changePassword(payload: any) {
+  try {
+    const cookieStore = await cookies();
+    const token = cookieStore.get("token")?.value;
+
+    if (!token) {
+      return {
+        success: false,
+        message: "No token provided",
+      };
+    }
+
+    const jwtSecret = process.env.JWT_SECRET!;
+    const decoded: any = jwt.verify(token, jwtSecret);
+
+    if (!decoded) {
+      return {
+        success: false,
+        message: "Invalid token",
+      };
+    }
+
+    const { id } = decoded;
+
+    // Check old password
+    const { data: user } = await supabaseConfig
+      .from("pizza_users")
+      .select("password")
+      .eq("id", id)
+      .single();
+
+    if (!user) {
+      return { success: false, message: "User not found" };
+    }
+
+    const isMatch = await bcrypt.compare(payload.oldPassword, user.password);
+    if (!isMatch) {
+      return { success: false, message: "Incorrect old password" };
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    const hashedNewPassword = await bcrypt.hash(payload.newPassword, salt);
+
+    const { error } = await supabaseConfig
+      .from("pizza_users")
+      .update({ password: hashedNewPassword })
+      .eq("id", id);
+
+    if (error) {
+      throw error;
+    }
+
+    return {
+      success: true,
+      message: "Password updated successfully"
+    };
+
+  } catch (error: any) {
+    return {
+      success: false,
+      message: error.message || "An error occurred while changing password"
+    };
+  }
+}
+
+export async function getAllUsers() {
+  try {
+    const { data: users, error } = await supabaseConfig
+      .from("pizza_users")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      throw error;
+    }
+
+    return {
+      success: true,
+      data: users
+    };
+  } catch (error: any) {
+    return {
+      success: false,
+      message: error.message || "An error occurred while fetching users"
+    };
+  }
+}
+
+export async function updateUser(userId: string, payload: { role?: string, isActive?: boolean }) {
+  try {
+    const { error } = await supabaseConfig
+      .from("pizza_users")
+      .update(payload)
+      .eq("id", userId);
+
+    if (error) {
+      throw error;
+    }
+
+    return {
+      success: true,
+      message: "User updated successfully"
+    };
+  } catch (error: any) {
+    return {
+      success: false,
+      message: error.message || "An error occurred while updating user"
+    };
+  }
+}
