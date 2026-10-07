@@ -31,7 +31,7 @@ const CartPage = () => {
 
   useEffect(() => {
     if (user?.id) {
-      getAddressByCustomerId(user.id).then((res) => {
+      getAddressByCustomerId(user.id.toString()).then((res) => {
         if (res.success && res.data) {
           setAddresses(res.data as IAddress[]);
           if (res.data.length > 0) {
@@ -78,7 +78,7 @@ const CartPage = () => {
   const onPaymentSuccess = async (paymentId: any) => {
     try {
       const response = await saveOrder({
-        customer_id: user?.id || "",
+        customer_id: user?.id?.toString() || "",
         subtotal,
         tax: 0,
         total: subtotal,

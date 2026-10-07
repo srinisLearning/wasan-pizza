@@ -1,11 +1,19 @@
-import React from 'react'
+import { validateJwtTokenAndGetUser } from "@/server-actions/users";
+import ProfileCard from "@/components/functional/profile-card";
+import React from "react";
 
-const AdminProfilePage = () => {
+async function AdminProfilePage() {
+  const response = await validateJwtTokenAndGetUser();
+
+  if (!response.success) {
+    return <div>{response.message}</div>;
+  }
+
   return (
-    <div className="mt-5">
-      <h1 className="text-2xl font-bold">Profile</h1>
+    <div className="flex flex-col gap-5 justify-center items-center mt-10">
+      <ProfileCard user={response.user!} />
     </div>
-  )
+  );
 }
 
-export default AdminProfilePage
+export default AdminProfilePage;

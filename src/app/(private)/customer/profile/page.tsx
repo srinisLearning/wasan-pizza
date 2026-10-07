@@ -10,7 +10,7 @@ async function PizzasPage() {
   }
 
   return (
-    <div className="flex flex-col gap-5 justify-center items-center">
+    <div className="flex flex-col gap-5 justify-center items-center mt-10">
       <ProfileCard user={response.user!} />
     </div>
   );

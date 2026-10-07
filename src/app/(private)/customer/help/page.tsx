@@ -12,7 +12,7 @@ const CustomerHelpPage = async () => {
 
   return (
     <div className="flex justify-center mt-10">
-      <div className="flex flex-col items-center bg-white shadow-md rounded-lg border border-gray-200 max-w-2xl w-full p-6 justify-center">
+      <div className="flex flex-col items-center bg-white shadow-md rounded-lg border border-primary max-w-2xl w-full p-6 justify-center">
         <PageTitle title="Help & Support" />
         <p className="text-gray-600 mt-2 text-center">
           Have a question or need assistance? <br /> Fill out the form below and

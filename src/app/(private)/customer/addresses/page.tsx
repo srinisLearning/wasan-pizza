@@ -43,7 +43,7 @@ const CustomerAddressesPage = () => {
   const fetchAddresses = useCallback(async () => {
     if (!user?.id) return;
     setIsLoading(true);
-    const response = await getAddressByCustomerId(user.id);
+    const response = await getAddressByCustomerId(user.id.toString());
     if (response.success && response.data) {
       setAddresses(response.data as IAddress[]);
     } else {
@@ -94,9 +94,9 @@ const CustomerAddressesPage = () => {
           <Button onClick={handleAddAddress}>Add New Address</Button>
         </div>
 
-        <div className="border rounded-md mt-5 mx-auto w-full bg-white">
+        <div className="border border-primary rounded-md mt-5 mx-auto w-full bg-white overflow-x-auto">
           <Table>
-            <TableHeader className="bg-primary/10 [&_tr]:border-primary border-primary">
+            <TableHeader className="bg-primary/5 [&_tr]:border-primary">
               <TableRow>
                 <TableHead>Name</TableHead>
                 <TableHead>Address</TableHead>
@@ -105,7 +105,7 @@ const CustomerAddressesPage = () => {
                 <TableHead className="text-right">Actions</TableHead>
               </TableRow>
             </TableHeader>
-            <TableBody>
+            <TableBody className="[&_tr]:border-primary/20">
               {isLoading ? (
                 <TableRow>
                   <TableCell colSpan={5} className="text-center h-24">

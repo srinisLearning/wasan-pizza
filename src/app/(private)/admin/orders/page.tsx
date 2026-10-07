@@ -126,9 +126,9 @@ const AdminOrdersPage = () => {
           <p className="text-gray-500">No orders found.</p>
         </div>
       ) : (
-        <div className="bg-white rounded-lg shadow-sm border mt-6 overflow-hidden">
+        <div className="bg-white rounded-lg shadow-sm border border-primary mt-6 overflow-hidden">
           <Table>
-            <TableHeader className="bg-primary/5">
+            <TableHeader className="bg-primary/5 [&_tr]:border-primary">
               <TableRow>
                 <TableHead>Order ID</TableHead>
                 <TableHead>Customer</TableHead>
@@ -138,7 +138,7 @@ const AdminOrdersPage = () => {
                 <TableHead>Status</TableHead>
               </TableRow>
             </TableHeader>
-            <TableBody>
+            <TableBody className="[&_tr]:border-primary/20">
               {filteredOrders.map((order) => (
                 <TableRow key={order.id}>
                   <TableCell className="font-medium text-xs max-w-[100px] truncate" title={order.id}>{order.id}</TableCell>

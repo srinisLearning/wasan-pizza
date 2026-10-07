@@ -40,7 +40,7 @@ const CustomerOrdersPage = () => {
   const fetchOrders = async () => {
     try {
       setLoading(true);
-      const res = await getOrdersByCustomerId(user!.id);
+      const res = await getOrdersByCustomerId(user!.id.toString());
       if (res.success && res.data) {
         setOrders(res.data as OrderWithItems[]);
       } else {
@@ -80,9 +80,9 @@ const CustomerOrdersPage = () => {
           <p className="text-gray-500">You haven't placed any orders yet.</p>
         </div>
       ) : (
-        <div className="bg-white rounded-lg shadow-sm border mt-6 overflow-hidden">
+        <div className="bg-white rounded-lg shadow-sm border border-primary mt-6 overflow-hidden">
           <Table>
-            <TableHeader className="bg-primary/5">
+            <TableHeader className="bg-primary/5 [&_tr]:border-primary">
               <TableRow>
                 <TableHead>Order ID</TableHead>
                 <TableHead>Date & Time</TableHead>
@@ -92,7 +92,7 @@ const CustomerOrdersPage = () => {
                 <TableHead>Status</TableHead>
               </TableRow>
             </TableHeader>
-            <TableBody>
+            <TableBody className="[&_tr]:border-primary/20">
               {orders.map((order) => (
                 <TableRow key={order.id}>
                   <TableCell className="font-medium">{order.id}</TableCell>

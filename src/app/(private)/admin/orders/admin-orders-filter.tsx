@@ -30,7 +30,7 @@ const AdminOrdersFilter: React.FC<AdminOrdersFilterProps> = ({ filters, setFilte
   };
 
   return (
-    <div className="flex flex-col sm:flex-row gap-4 items-end bg-white p-4 rounded-lg shadow-sm border mt-6">
+    <div className="flex flex-col sm:flex-row gap-4 items-end bg-white p-4 rounded-lg shadow-sm border border-primary mt-6">
       <div className="flex-1 w-full">
         <label className="text-sm font-medium text-gray-700 mb-1 block">Status</label>
         <Select

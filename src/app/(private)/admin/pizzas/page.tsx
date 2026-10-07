@@ -102,9 +102,9 @@ const AdminPizzaContent = () => {
           <AddPizzaFilterComponent />
         </div>
 
-        <div className="border rounded-md mt-5 w-full overflow-x-auto">
+        <div className="border border-primary rounded-md mt-5 w-full overflow-x-auto">
           <Table>
-            <TableHeader>
+            <TableHeader className="bg-primary/5 [&_tr]:border-primary">
               <TableRow>
                 <TableHead>Image</TableHead>
                 <TableHead>Name</TableHead>
@@ -114,7 +114,7 @@ const AdminPizzaContent = () => {
                 <TableHead className="text-right">Actions</TableHead>
               </TableRow>
             </TableHeader>
-            <TableBody>
+            <TableBody className="[&_tr]:border-primary/20">
               {pizzas.map((pizza) => (
                 <TableRow key={pizza.id}>
                   <TableCell>

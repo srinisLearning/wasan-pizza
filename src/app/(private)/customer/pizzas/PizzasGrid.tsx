@@ -53,7 +53,7 @@ export const PizzasGrid = ({ pizzas }: { pizzas: PizzaWithVariants[] }) => {
         {pizzas.map((pizza) => (
           <div
             key={pizza.id}
-            className="border rounded-lg shadow-sm hover:shadow-md cursor-pointer overflow-hidden bg-white transition-all duration-200 flex flex-col"
+            className="border border-primary rounded-lg shadow-sm hover:shadow-md cursor-pointer overflow-hidden bg-white transition-all duration-200 flex flex-col"
             onClick={() => handlePizzaClick(pizza)}
           >
             <div className="h-66 w-full bg-gray-100 overflow-hidden">

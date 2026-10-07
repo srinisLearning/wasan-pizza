@@ -55,7 +55,7 @@ function ChangePassword() {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" className="w-full">
+        <Button className="w-full bg-primary text-white hover:bg-primary/90">
           Change Password
         </Button>
       </DialogTrigger>

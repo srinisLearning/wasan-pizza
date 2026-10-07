@@ -6,7 +6,7 @@ function ProfileCard({ user }: { user: IUser }) {
   if (!user) return null;
   
   return (
-    <div className="bg-white shadow-md rounded-lg p-6 max-w-sm border border-gray-200">
+    <div className="bg-white shadow-md rounded-lg p-6 max-w-sm border border-primary">
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-xl font-bold text-gray-800">{user.name}</h2>
         <span

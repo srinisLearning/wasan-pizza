@@ -11,7 +11,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import dayjs from "dayjs";
-import { formatCurrency } from "@/lib/utils"; // Assuming there might be a formatter, if not I'll just use a standard one.
+
 import PageTitle from "@/components/ui/page-title";
 
 interface DashboardData {
