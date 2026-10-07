@@ -13,7 +13,7 @@ const PizzasPage = async ({
 
   return (
     <div className="p-6">
-      <h4 className="text-3xl font-bold text-primary/40 mb-6">
+      <h4 className="text-3xl font-bold text-primary mb-6">
         Order Your Favorite Pizza from our delicious Menu
       </h4>
       <PizzaFilters />
